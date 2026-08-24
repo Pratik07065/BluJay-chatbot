@@ -37,11 +37,10 @@ app = Flask(
 # Request Payload Size Limit (1 MB)
 app.config["MAX_CONTENT_LENGTH"] = 1 * 1024 * 1024
 
-# CORS Setup - Restrict origins
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")
-ALLOWED_ORIGINS = [FRONTEND_ORIGIN, "http://localhost:3000", "http://127.0.0.1:5500", "http://localhost:5173"]
+# CORS Setup - Enable cross-origin widget embeds from Blujay website
+FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "*")
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-CORS(app, resources={r"/api/*": {"origins": ALLOWED_ORIGINS}})
 
 # Rate Limiting Setup
 limiter = Limiter(

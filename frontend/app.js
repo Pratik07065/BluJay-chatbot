@@ -65,7 +65,7 @@ const TypingIndicator = () => {
 };
 
 // 4. Reusable Chat Header Component
-const ChatHeader = ({ onClose, onClear }) => {
+const ChatHeader = ({ onClose, onClear, isExpanded, onToggleExpand }) => {
     return (
         <header class="blujay-chat-header">
             <div class="header-brand">
@@ -81,6 +81,14 @@ const ChatHeader = ({ onClose, onClear }) => {
                 </div>
             </div>
             <div class="header-controls">
+                <button 
+                    class="control-btn" 
+                    onClick={onToggleExpand} 
+                    title={isExpanded ? "Restore Default Size" : "Expand Chatbot Window"} 
+                    aria-label={isExpanded ? "Restore default chatbot size" : "Expand chatbot window"}
+                >
+                    <i class={isExpanded ? "fa-solid fa-compress" : "fa-solid fa-expand"}></i>
+                </button>
                 <button 
                     class="control-btn" 
                     onClick={onClear} 
@@ -101,6 +109,7 @@ const ChatHeader = ({ onClose, onClear }) => {
         </header>
     );
 };
+
 
 // 5. Reusable Chat Input Form Component
 const ChatInput = ({ onSend, disabled }) => {
@@ -170,6 +179,7 @@ const FloatingButton = ({ isOpen, toggleOpen }) => {
 // Main Chatbot Widget Orchestrator Component
 const BlujayChatbotWidget = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     
     const WELCOME_MESSAGE = {
@@ -254,11 +264,14 @@ const BlujayChatbotWidget = () => {
     return (
         <div class="blujay-widget-container">
             {isOpen && (
-                <div class="blujay-chat-window" role="dialog" aria-label="Blujay Assistant Chat Window">
+                <div class={`blujay-chat-window ${isExpanded ? 'is-expanded' : ''}`} role="dialog" aria-label="Blujay Assistant Chat Window">
                     <ChatHeader 
                         onClose={() => setIsOpen(false)} 
-                        onClear={handleClear} 
+                        onClear={handleClear}
+                        isExpanded={isExpanded}
+                        onToggleExpand={() => setIsExpanded(!isExpanded)}
                     />
+
 
                     <main class="blujay-chat-body" aria-live="polite">
                         {messages.map((msg) => (

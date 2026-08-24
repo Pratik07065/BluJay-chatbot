@@ -235,7 +235,18 @@ body {
     transform-origin: bottom right;
     animation: widgetSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     border: 1px solid rgba(226, 232, 240, 0.8);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    resize: both;
 }
+
+/* Expanded Layout Mode */
+.blujay-chat-window.is-expanded {
+    width: 580px;
+    height: 720px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 40px);
+}
+
 
 @keyframes widgetSlideUp {
     from {
