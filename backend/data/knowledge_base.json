@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "institution": {
+    "name": "Blujay Technologies",
+    "website": "https://www.blujaytech.com/"
+  },
+  "categories": [
+    {
+      "id": "placement",
+      "name": "Placement",
+      "entries": [
+        {
+          "id": "entry_adeb8fc6",
+          "questions": [
+            "What is the placement assistance policy at Blujay?"
+          ],
+          "answer": "Blujay Technologies offers Python training and career guidance.",
+          "keywords": [
+            "placement",
+            "assistance",
+            "policy"
+          ],
+          "source": "groq_api",
+          "confidence": 1.0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "institution": {
+    "name": "Blujay Technologies",
+    "alternate_name": "Blujay Tech",
+    "tagline": "Helping 1 Million People Build Their Future in IT",
+    "overview": "Blujay Technologies is Hyderabad's premier IT training institute located in Ameerpet. We offer expert-led IT software courses with 100% placement assistance, real-time projects, and flexible online and offline learning modes."
+  },
+  "contact": {
+    "address": "5th Floor, Mythrivanam Building, Ameerpet, Hyderabad, Telangana 500016, India",
+    "landmark": "Mythrivanam Building, Ameerpet",
+    "city": "Hyderabad",
+    "state": "Telangana",
+    "pin_code": "500016",
+    "phone": "+91 96187 21797",
+    "email": "info@blujaytech.com",
+    "website": "https://www.blujaytech.com/",
+    "languages": ["English", "Hindi", "Telugu"],
+    "social_links": {
+      "linkedin": "https://www.linkedin.com/company/blujay-technologies",
+      "youtube": "https://www.youtube.com/@blujaytechnologies",
+      "instagram": "https://www.instagram.com/blujaytechnologies",
+      "facebook": "https://www.facebook.com/blujaytechnologies"
+    }
+  },
+  "courses": [
+    {
+      "id": "python-fullstack",
+      "title": "Python Full Stack Development",
+      "category": "Software Development",
+      "duration": "3 to 4 Months",
+      "modes": ["Classroom (Offline Ameerpet)", "Online Live Interactive"],
+      "curriculum": [
+        "Python Programming (Core & Advanced)",
+        "Object-Oriented Programming (OOPs)",
+        "Django Framework & REST APIs",
+        "Frontend (HTML5, CSS3, JavaScript, Bootstrap)",
+        "Database Management (MySQL, PostgreSQL)",
+        "Version Control (Git & GitHub)",
+        "Real-time Capstone Project"
+      ],
+      "target_audience": "Beginners, B.Tech/BCA/MCA graduates, career switchers",
+      "prerequisites": "No prior coding background required. We teach from scratch."
+    },
+    {
+      "id": "java-fullstack",
+      "title": "Java Full Stack Development",
+      "category": "Software Development",
+      "duration": "3 to 4 Months",
+      "modes": ["Classroom (Offline Ameerpet)", "Online Live Interactive"],
+      "curriculum": [
+        "Core Java & Data Structures",
+        "Advanced Java (JDBC, Servlets, JSP)",
+        "Spring Framework & Spring Boot",
+        "Microservices Architecture & RESTful Web Services",
+        "Hibernate / JPA ORM",
+        "Database (SQL, MySQL, Oracle)",
+        "Frontend (HTML, CSS, JavaScript, React/Angular basics)",
+        "Real-world Enterprise Application Project"
+      ],
+      "target_audience": "Students, IT job aspirants, software developer candidates",
+      "prerequisites": "Basic computer knowledge."
+    },
+    {
+      "id": "aws-devops",
+      "title": "AWS Cloud & DevOps Engineering",
+      "category": "Cloud & Infrastructure",
+      "duration": "2.5 to 3 Months",
+      "modes": ["Classroom (Offline Ameerpet)", "Online Live Interactive"],
+      "curriculum": [
+        "Linux Operating System Fundamentals",
+        "AWS Infrastructure (EC2, S3, IAM, VPC, Route53, RDS, CloudWatch)",
+        "DevOps Principles & CI/CD Pipeline Automation",
+        "Version Control with Git & GitHub",
+        "Containerization with Docker",
+        "Container Orchestration with Kubernetes",
+        "Configuration Management with Ansible",
+        "Infrastructure as Code (IaC) with Terraform",
+        "Monitoring with Prometheus & Grafana"
+      ],
+      "target_audience": "Sysadmins, IT professionals, Cloud aspirants, Freshers",
+      "prerequisites": "No prior cloud knowledge needed. Linux is covered from scratch."
+    },
+    {
+      "id": "mern-stack",
+      "title": "MERN Full Stack Web Development",
+      "category": "Web Development",
+      "duration": "3 Months",
+      "modes": ["Classroom (Offline Ameerpet)", "Online Live Interactive"],
+      "curriculum": [
+        "Modern JavaScript (ES6+)",
+        "HTML5, CSS3, Tailwind CSS & Responsive Layouts",
+        "React.js (Hooks, State Management, Redux)",
+        "Node.js & Express.js Backend Architecture",
+        "MongoDB NoSQL Database & Mongoose ORM",
+        "REST API Development & Authentication (JWT)",
+        "Deployment on Vercel/Netlify/AWS"
+      ],
+      "target_audience": "Web developers, students, UI/UX designers switching to full stack",
+      "prerequisites": "Basic understanding of web pages is helpful."
+    },
+    {
+      "id": "aiml-data-science",
+      "title": "Data Science & AI / ML",
+      "category": "Data Science & AI",
+      "duration": "4 Months",
+      "modes": ["Classroom (Offline Ameerpet)", "Online Live Interactive"],
+      "curriculum": [
+        "Python for Data Science (NumPy, Pandas, Matplotlib, Seaborn)",
+        "Exploratory Data Analysis (EDA) & Statistics",
+        "Machine Learning Algorithms (Regression, Classification, Clustering)",
+        "Deep Learning Fundamentals (Neural Networks, TensorFlow, PyTorch)",
+        "Natural Language Processing (NLP) & GenAI concepts",
+        "SQL for Data Analysis",
+        "Real-world Data Science Projects"
+      ],
+      "target_audience": "Data analysts, engineers, graduates, AI enthusiasts",
+      "prerequisites": "Basic mathematics concepts."
+    }
+  ],
+  "placement_support": {
+    "guarantee": "100% Placement Assistance",
+    "services": [
+      "Resume building & ATS optimization",
+      "Mock technical interviews & HR guidance",
+      "GitHub & LinkedIn portfolio reviews",
+      "Direct company referral drives & placement alerts",
+      "Aptitude & soft skills training"
+    ],
+    "hiring_partners": "Network of 100+ hiring tech companies across India"
+  },
+  "training_features": {
+    "trainers": "Experienced industry professionals with 8+ years of hands-on software development experience.",
+    "projects": "Industry real-time capstone projects included in every course.",
+    "batch_timings": "Flexible Morning, Evening, and Weekend batches available.",
+    "demo": "Free demo classes available before course enrollment.",
+    "certification": "Course Completion Certificate issued upon project evaluation."
+  },
+  "admissions": {
+    "process": "1. Contact admissions at +91 96187 21797 or register online for a free demo. 2. Attend demo class. 3. Select course and batch schedule. 4. Complete enrollment.",
+    "fee_policy": "Competitive & affordable fee structure with installment payment options available upon inquiry with the admissions desk."
+  }
+}
