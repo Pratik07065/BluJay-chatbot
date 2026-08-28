@@ -6,21 +6,520 @@
   },
   "categories": [
     {
-      "id": "placement",
-      "name": "Placement",
+      "id": "institute_information",
+      "name": "Institute Information",
       "entries": [
         {
-          "id": "entry_adeb8fc6",
+          "id": "inst_001",
           "questions": [
-            "What is the placement assistance policy at Blujay?"
+            "What is Blujay Technologies?",
+            "Tell me about Blujay Technologies",
+            "Who is Blujay Technologies?",
+            "What does Blujay Tech do?",
+            "Overview of Blujay institute"
           ],
-          "answer": "Blujay Technologies offers Python training and career guidance.",
+          "answer": "Blujay Technologies is Hyderabad's premier IT training institute located in Ameerpet. The institute is dedicated to helping 1 million people build their future in IT through expert-led software training courses, hands-on real-time projects, and 100% placement support.",
+          "keywords": [
+            "blujay",
+            "technologies",
+            "institute",
+            "overview",
+            "hyderabad",
+            "ameerpet"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "courses",
+      "name": "Courses Offered",
+      "entries": [
+        {
+          "id": "course_001",
+          "questions": [
+            "What courses do you offer?",
+            "Which courses are available at Blujay?",
+            "What training programs does Blujay offer?",
+            "List of software courses at Blujay",
+            "What can I learn at Blujay Technologies?"
+          ],
+          "answer": "Blujay Technologies offers the following expert-led IT training programs:\n• Python Full Stack Development\n• Java Full Stack Development\n• AWS Cloud & DevOps Engineering\n• MERN Full Stack Web Development\n• Data Science & AI/ML",
+          "keywords": [
+            "courses",
+            "training",
+            "programs",
+            "offer",
+            "available",
+            "software"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        },
+        {
+          "id": "course_002",
+          "questions": [
+            "What is Python Full Stack?",
+            "Tell me about Python Full Stack",
+            "Do you have Python Full Stack?",
+            "Python Full Stack course details?",
+            "What is covered in Python course?"
+          ],
+          "answer": "Python Full Stack Development at Blujay Technologies:\n• Duration: 16 weeks (4 months)\n• Learning Mode: Online & Offline (Classroom in Ameerpet)\n• Curriculum: Python, Django, React, Database Design, REST APIs\n• Certificate: Official Course Completion Certification included",
+          "keywords": [
+            "python",
+            "fullstack",
+            "django",
+            "react",
+            "database design",
+            "16 weeks",
+            "online",
+            "offline",
+            "certification"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        },
+        {
+          "id": "course_003",
+          "questions": [
+            "What is Java Full Stack?",
+            "Tell me about Java Full Stack",
+            "Do you offer Java course?",
+            "Java Full Stack course details?",
+            "What is taught in Java training?"
+          ],
+          "answer": "Java Full Stack Development curriculum includes:\n• Core Java & Data Structures\n• Advanced Java (JDBC, Servlets, JSP)\n• Spring Framework & Spring Boot\n• Microservices Architecture & RESTful Web Services\n• Hibernate/JPA ORM & Databases (SQL, MySQL, Oracle)\n• Frontend Web Basics & Enterprise Project Implementation",
+          "keywords": [
+            "java",
+            "fullstack",
+            "spring boot",
+            "microservices",
+            "hibernate",
+            "sql",
+            "servlets"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        },
+        {
+          "id": "course_004",
+          "questions": [
+            "Tell me about AWS DevOps course",
+            "Do you offer DevOps training?",
+            "AWS Cloud and DevOps details?",
+            "What is included in AWS DevOps engineering?",
+            "AWS DevOps course syllabus?"
+          ],
+          "answer": "AWS Cloud & DevOps Engineering curriculum covers:\n• Linux OS Fundamentals\n• AWS Infrastructure (EC2, S3, IAM, VPC, Route53, RDS, CloudWatch)\n• CI/CD Pipeline Automation & Git/GitHub\n• Docker Containerization & Kubernetes Orchestration\n• Ansible Configuration Management & Terraform (IaC)\n• Prometheus & Grafana Monitoring",
+          "keywords": [
+            "aws",
+            "devops",
+            "cloud",
+            "docker",
+            "kubernetes",
+            "terraform",
+            "ansible",
+            "jenkins",
+            "linux"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        },
+        {
+          "id": "course_005",
+          "questions": [
+            "What is MERN stack course?",
+            "Tell me about MERN stack development",
+            "Do you teach React and Node.js?",
+            "MERN Full Stack course details?",
+            "MERN web development syllabus?"
+          ],
+          "answer": "MERN Full Stack Web Development curriculum covers:\n• Modern JavaScript (ES6+), HTML5, CSS3, Tailwind CSS\n• React.js (Hooks, State Management, Redux)\n• Node.js & Express.js Backend Architecture\n• MongoDB NoSQL Database & Mongoose ORM\n• JWT Authentication & Cloud Deployment",
+          "keywords": [
+            "mern",
+            "react",
+            "node",
+            "express",
+            "mongodb",
+            "javascript",
+            "web development"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        },
+        {
+          "id": "course_006",
+          "questions": [
+            "Tell me about Data Science course",
+            "Do you offer AI and Machine Learning training?",
+            "Data Science and AI/ML details?",
+            "What is covered in Artificial Intelligence course?",
+            "Data Science course details?"
+          ],
+          "answer": "Data Science & AI/ML curriculum covers:\n• Python for Data Science (NumPy, Pandas, Matplotlib, Seaborn)\n• Exploratory Data Analysis (EDA) & Statistics\n• Machine Learning Algorithms (Regression, Classification, Clustering)\n• Deep Learning (Neural Networks, TensorFlow, PyTorch)\n• Natural Language Processing (NLP) & GenAI Concepts\n• SQL Data Analytics",
+          "keywords": [
+            "data science",
+            "ai",
+            "ml",
+            "machine learning",
+            "deep learning",
+            "python",
+            "pandas",
+            "nlp",
+            "tensorflow"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "course_duration",
+      "name": "Course Duration",
+      "entries": [
+        {
+          "id": "dur_001",
+          "questions": [
+            "What is the duration of the courses?",
+            "How long are the training programs?",
+            "Course duration at Blujay?",
+            "How many months does it take to complete training?"
+          ],
+          "answer": "Course durations at Blujay Technologies vary by program:\n• Python Full Stack Development: 16 weeks (4 months)\n• Java Full Stack Development: 3 to 4 months\n• AWS Cloud & DevOps Engineering: 2.5 to 3 months\n• MERN Full Stack Web Development: 3 months\n• Data Science & AI/ML: 4 months",
+          "keywords": [
+            "duration",
+            "months",
+            "length",
+            "how long",
+            "time",
+            "period"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "course_mode",
+      "name": "Course Mode",
+      "entries": [
+        {
+          "id": "mode_001",
+          "questions": [
+            "Are classes online or offline?",
+            "Do you offer classroom training in Ameerpet?",
+            "Can I attend online live classes?",
+            "What are the learning modes at Blujay?",
+            "Is remote online learning available?"
+          ],
+          "answer": "Blujay Technologies offers both Classroom (Offline) training at our Ameerpet centre in Hyderabad and Live Interactive Online training for students nationwide.",
+          "keywords": [
+            "online",
+            "offline",
+            "classroom",
+            "remote",
+            "mode",
+            "ameerpet",
+            "live"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "curriculum",
+      "name": "Curriculum",
+      "entries": [
+        {
+          "id": "curr_001",
+          "questions": [
+            "How is the course curriculum structured?",
+            "Is the syllabus aligned with industry requirements?",
+            "What kind of topics are taught?",
+            "Does Blujay teach from basics?"
+          ],
+          "answer": "The curriculum at Blujay Technologies is industry-aligned and designed by active tech professionals. It starts from fundamental concepts and advances to complex architecture, real-world tools, and hands-on software development practices.",
+          "keywords": [
+            "curriculum",
+            "syllabus",
+            "industry",
+            "basics",
+            "topics",
+            "structure"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "placement_support",
+      "name": "Placement Support",
+      "entries": [
+        {
+          "id": "place_001",
+          "questions": [
+            "Does Blujay provide placement support?",
+            "Is there 100% placement assistance?",
+            "How does job placement work at Blujay?",
+            "Will I get job referrals after course completion?",
+            "What placement services are offered?"
+          ],
+          "answer": "Blujay Technologies provides 100% Placement Support including:\n• Resume Building & ATS Optimization\n• Mock Technical & HR Interview Preparation\n• LinkedIn & GitHub Portfolio Reviews\n• Direct Company Referral Drives (100+ Hiring Tech Partners)\n• Dedicated Placement Alerts & Career Guidance",
           "keywords": [
             "placement",
+            "job",
             "assistance",
-            "policy"
+            "referrals",
+            "interview",
+            "resume",
+            "hiring"
           ],
-          "source": "groq_api",
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "live_projects",
+      "name": "Live Projects",
+      "entries": [
+        {
+          "id": "proj_001",
+          "questions": [
+            "Are live projects included in the training?",
+            "Do students work on real-time projects?",
+            "What project experience will I get?",
+            "Is practical hands-on project work provided?"
+          ],
+          "answer": "Yes, all training programs at Blujay Technologies include mandatory hands-on real-time capstone projects. Students gain practical experience building, testing, and deploying real-world software applications.",
+          "keywords": [
+            "live projects",
+            "real-time",
+            "capstone",
+            "practical",
+            "hands-on",
+            "projects"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "certifications",
+      "name": "Certifications",
+      "entries": [
+        {
+          "id": "cert_001",
+          "questions": [
+            "Will I get a certificate after completing the course?",
+            "Does Blujay issue course certification?",
+            "Is the certificate recognized?",
+            "What certification is provided?"
+          ],
+          "answer": "Yes, upon successful evaluation of training and capstone project completion, Blujay Technologies awards an official Course Completion Certificate recognizing your practical skills and project experience.",
+          "keywords": [
+            "certificate",
+            "certification",
+            "completion",
+            "awarded",
+            "credential"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "admissions",
+      "name": "Admissions",
+      "entries": [
+        {
+          "id": "adm_001",
+          "questions": [
+            "Who is eligible to join Blujay courses?",
+            "How to enroll in a course at Blujay?",
+            "Can non-IT or freshers join?",
+            "What is the admission process?",
+            "Are freshers eligible for IT training?"
+          ],
+          "answer": "Blujay courses are open to freshers, B.Tech/BCA/MCA/Degree graduates, job seekers, and working professionals looking to switch to IT careers. Prior coding experience is not required as training begins from scratch. You can enroll by contacting admissions at +91 96187 21797 or booking a free demo.",
+          "keywords": [
+            "admissions",
+            "eligible",
+            "eligibility",
+            "freshers",
+            "enroll",
+            "process",
+            "non-it"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "fees",
+      "name": "Fees",
+      "entries": [
+        {
+          "id": "fee_001",
+          "questions": [
+            "What are the course fees?",
+            "How much does training cost at Blujay?",
+            "Is fee installment option available?",
+            "What is the fee structure for courses?",
+            "Can I pay course fees in installments?"
+          ],
+          "answer": "Blujay Technologies offers competitive and affordable fee structures with flexible installment payment options available. For exact fee details and promotional discounts for specific batches, please contact the admissions desk directly at +91 96187 21797.",
+          "keywords": [
+            "fees",
+            "fee",
+            "cost",
+            "price",
+            "installment",
+            "payment",
+            "affordable"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "name": "Contact",
+      "entries": [
+        {
+          "id": "cnt_001",
+          "questions": [
+            "How can I contact Blujay Technologies?",
+            "What is Blujay phone number?",
+            "What is Blujay email address?",
+            "How to reach Blujay support?",
+            "What is Blujay contact number?"
+          ],
+          "answer": "You can contact Blujay Technologies by phone/WhatsApp at +91 96187 21797 or by email at info@blujaytech.com. Support is available in English, Hindi, and Telugu.",
+          "keywords": [
+            "contact",
+            "phone",
+            "number",
+            "email",
+            "whatsapp",
+            "call",
+            "reach"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "location",
+      "name": "Location",
+      "entries": [
+        {
+          "id": "loc_001",
+          "questions": [
+            "Where is Blujay Technologies located?",
+            "What is the address of Blujay institute?",
+            "Is Blujay in Ameerpet Hyderabad?",
+            "Where is the classroom training branch?",
+            "How to visit Blujay office?"
+          ],
+          "answer": "Blujay Technologies is located at 5th Floor, Mythrivanam Building, Ameerpet, Hyderabad, Telangana 500016, India. Landmark: Mythrivanam Building, Ameerpet.",
+          "keywords": [
+            "location",
+            "address",
+            "ameerpet",
+            "hyderabad",
+            "mythrivanam",
+            "located",
+            "where"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "demo_classes",
+      "name": "Demo Classes",
+      "entries": [
+        {
+          "id": "demo_001",
+          "questions": [
+            "Can I attend a free demo class?",
+            "How to book a demo class at Blujay?",
+            "Is demo class free before joining?",
+            "Where to register for demo class?"
+          ],
+          "answer": "Yes! Blujay Technologies offers free demo classes for all courses. You can book a free demo session by registering on our website or messaging/calling +91 96187 21797.",
+          "keywords": [
+            "demo",
+            "free demo",
+            "trial",
+            "attend demo",
+            "book demo",
+            "register demo"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "hiring_drives",
+      "name": "Hiring Drives",
+      "entries": [
+        {
+          "id": "hire_001",
+          "questions": [
+            "Does Blujay conduct hiring drives?",
+            "What are free hiring drives at Blujay?",
+            "Tell me about profile pushing and jobs support at Blujay",
+            "How do students get placed through hiring drives?"
+          ],
+          "answer": "Blujay Technologies conducts regular free hiring drives and direct company referrals across 100+ partner tech companies. Through dedicated profile pushing and career support, student resumes are referred directly to actively hiring IT companies.",
+          "keywords": [
+            "hiring drives",
+            "drives",
+            "profile pushing",
+            "referral",
+            "partners",
+            "jobs"
+          ],
+          "source": "Blujay website",
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "digital_services",
+      "name": "Digital Services",
+      "entries": [
+        {
+          "id": "serv_001",
+          "questions": [
+            "Does Blujay provide software or digital marketing services?",
+            "What services does Blujay Tech offer besides training?",
+            "Tell me about web development and DevOps consulting services at Blujay",
+            "Digital marketing services by Blujay?"
+          ],
+          "answer": "In addition to IT training, Blujay Technologies provides the following corporate and digital services:\n• Web Development Services\n• Digital Marketing & SEO Services\n• DevOps Consulting",
+          "keywords": [
+            "services",
+            "web development",
+            "digital marketing",
+            "seo",
+            "devops consulting",
+            "corporate"
+          ],
+          "source": "Blujay website",
           "confidence": 1.0
         }
       ]

@@ -12,7 +12,7 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 
 
 # Knowledge base paths
-KB_JSON_PATH = DATA_DIR / "knowledge_base.json"
+KB_JSON_PATH = DATA_DIR / "knowledge.json"
 BLUJAY_CONTEXT_PATH = DATA_DIR / "blujay_context.json"
 
 # Matching thresholds

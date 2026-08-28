@@ -45,7 +45,7 @@
             "List of software courses at Blujay",
             "What can I learn at Blujay Technologies?"
           ],
-          "answer": "Blujay Technologies offers expert-led IT training programs in Python Full Stack Development, Java Full Stack Development, AWS Cloud & DevOps Engineering, MERN Full Stack Web Development, and Data Science & AI/ML.",
+          "answer": "Blujay Technologies offers the following expert-led IT training programs:\n• Python Full Stack Development\n• Java Full Stack Development\n• AWS Cloud & DevOps Engineering\n• MERN Full Stack Web Development\n• Data Science & AI/ML",
           "keywords": [
             "courses",
             "training",
@@ -66,7 +66,7 @@
             "Python Full Stack course details?",
             "What is covered in Python course?"
           ],
-          "answer": "Python Full Stack Development at Blujay Technologies is a 16-week program available in both Online and Offline modes. The curriculum covers Python, Django, React, Database design, and REST APIs, and includes an official Course Completion Certification.",
+          "answer": "Python Full Stack Development at Blujay Technologies:\n• Duration: 16 weeks (4 months)\n• Learning Mode: Online & Offline (Classroom in Ameerpet)\n• Curriculum: Python, Django, React, Database Design, REST APIs\n• Certificate: Official Course Completion Certification included",
           "keywords": [
             "python",
             "fullstack",
@@ -90,7 +90,7 @@
             "Java Full Stack course details?",
             "What is taught in Java training?"
           ],
-          "answer": "Java Full Stack Development includes Core Java, Data Structures, Advanced Java (JDBC, Servlets, JSP), Spring Framework, Spring Boot, Microservices architecture, RESTful web services, Hibernate/JPA ORM, Databases (SQL, MySQL, Oracle), and frontend web basics with enterprise project implementation.",
+          "answer": "Java Full Stack Development curriculum includes:\n• Core Java & Data Structures\n• Advanced Java (JDBC, Servlets, JSP)\n• Spring Framework & Spring Boot\n• Microservices Architecture & RESTful Web Services\n• Hibernate/JPA ORM & Databases (SQL, MySQL, Oracle)\n• Frontend Web Basics & Enterprise Project Implementation",
           "keywords": [
             "java",
             "fullstack",
@@ -112,7 +112,7 @@
             "What is included in AWS DevOps engineering?",
             "AWS DevOps course syllabus?"
           ],
-          "answer": "AWS Cloud & DevOps Engineering covers Linux OS fundamentals, AWS Infrastructure (EC2, S3, IAM, VPC, Route53, RDS, CloudWatch), DevOps principles, CI/CD pipeline automation, Git/GitHub, Docker containerization, Kubernetes orchestration, Ansible configuration management, Terraform Infrastructure as Code (IaC), and Prometheus/Grafana monitoring.",
+          "answer": "AWS Cloud & DevOps Engineering curriculum covers:\n• Linux OS Fundamentals\n• AWS Infrastructure (EC2, S3, IAM, VPC, Route53, RDS, CloudWatch)\n• CI/CD Pipeline Automation & Git/GitHub\n• Docker Containerization & Kubernetes Orchestration\n• Ansible Configuration Management & Terraform (IaC)\n• Prometheus & Grafana Monitoring",
           "keywords": [
             "aws",
             "devops",
@@ -136,7 +136,7 @@
             "MERN Full Stack course details?",
             "MERN web development syllabus?"
           ],
-          "answer": "MERN Full Stack Web Development covers Modern JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, React.js (Hooks, State Management, Redux), Node.js & Express.js backend architecture, MongoDB NoSQL database, Mongoose ORM, JWT authentication, and cloud deployment.",
+          "answer": "MERN Full Stack Web Development curriculum covers:\n• Modern JavaScript (ES6+), HTML5, CSS3, Tailwind CSS\n• React.js (Hooks, State Management, Redux)\n• Node.js & Express.js Backend Architecture\n• MongoDB NoSQL Database & Mongoose ORM\n• JWT Authentication & Cloud Deployment",
           "keywords": [
             "mern",
             "react",
@@ -158,7 +158,7 @@
             "What is covered in Artificial Intelligence course?",
             "Data Science course details?"
           ],
-          "answer": "Data Science & AI/ML covers Python for Data Science (NumPy, Pandas, Matplotlib, Seaborn), Exploratory Data Analysis (EDA), Statistics, Machine Learning algorithms (Regression, Classification, Clustering), Deep Learning fundamentals (Neural Networks, TensorFlow, PyTorch), Natural Language Processing (NLP), GenAI concepts, and SQL data analytics.",
+          "answer": "Data Science & AI/ML curriculum covers:\n• Python for Data Science (NumPy, Pandas, Matplotlib, Seaborn)\n• Exploratory Data Analysis (EDA) & Statistics\n• Machine Learning Algorithms (Regression, Classification, Clustering)\n• Deep Learning (Neural Networks, TensorFlow, PyTorch)\n• Natural Language Processing (NLP) & GenAI Concepts\n• SQL Data Analytics",
           "keywords": [
             "data science",
             "ai",
@@ -187,7 +187,7 @@
             "Course duration at Blujay?",
             "How many months does it take to complete training?"
           ],
-          "answer": "Course durations at Blujay Technologies vary by program: Python Full Stack Development: 16 weeks (4 months); Java Full Stack Development: 3 to 4 months; AWS Cloud & DevOps Engineering: 2.5 to 3 months; MERN Full Stack Web Development: 3 months; Data Science & AI/ML: 4 months.",
+          "answer": "Course durations at Blujay Technologies vary by program:\n• Python Full Stack Development: 16 weeks (4 months)\n• Java Full Stack Development: 3 to 4 months\n• AWS Cloud & DevOps Engineering: 2.5 to 3 months\n• MERN Full Stack Web Development: 3 months\n• Data Science & AI/ML: 4 months",
           "keywords": [
             "duration",
             "months",
@@ -268,7 +268,7 @@
             "Will I get job referrals after course completion?",
             "What placement services are offered?"
           ],
-          "answer": "Yes, Blujay Technologies provides 100% Placement Support. Services include resume building & ATS optimization, mock technical & HR interview preparation, LinkedIn and GitHub portfolio reviews, direct company referral drives, and placement alerts across a network of 100+ hiring tech companies.",
+          "answer": "Blujay Technologies provides 100% Placement Support including:\n• Resume Building & ATS Optimization\n• Mock Technical & HR Interview Preparation\n• LinkedIn & GitHub Portfolio Reviews\n• Direct Company Referral Drives (100+ Hiring Tech Partners)\n• Dedicated Placement Alerts & Career Guidance",
           "keywords": [
             "placement",
             "job",
@@ -510,7 +510,7 @@
             "Tell me about web development and DevOps consulting services at Blujay",
             "Digital marketing services by Blujay?"
           ],
-          "answer": "In addition to IT training, Blujay Technologies provides corporate and digital services including Web Development Services, Digital Marketing & SEO Services, and DevOps Consulting.",
+          "answer": "In addition to IT training, Blujay Technologies provides the following corporate and digital services:\n• Web Development Services\n• Digital Marketing & SEO Services\n• DevOps Consulting",
           "keywords": [
             "services",
             "web development",
