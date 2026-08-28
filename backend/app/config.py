@@ -28,7 +28,7 @@ OUT_OF_DOMAIN_RESPONSE = (
 
 # Standard fallback response when information is not in knowledge base
 FALLBACK_RESPONSE = (
-    "The requested information is currently not available in our knowledge base. "
+    "The requested information is currently unavailable. "
     "Please contact Blujay Technologies directly at +91 96187 21797 or email info@blujaytech.com. "
     "You can also visit our institute at 5th Floor, Mythrivanam Building, Ameerpet, Hyderabad."
 )
