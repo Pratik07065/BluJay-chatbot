@@ -9,6 +9,9 @@ from app.models.schemas import ChatRequest, ChatResponse
 from app.core.chatbot import process_question, get_orchestrator
 from app.config import OUT_OF_DOMAIN_RESPONSE, FALLBACK_RESPONSE
 
+# Pre-warm ChromaDB & ONNX embedding model at server startup
+get_orchestrator()
+
 app = FastAPI(
     title="Blujay Technologies AI Inquiry Chatbot API",
     description="Domain-specific AI Chatbot API for Blujay Technologies",

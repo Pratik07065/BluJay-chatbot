@@ -50,8 +50,22 @@ class ChatbotOrchestrator:
                 "confidence": 0.0,
             }
 
-        # Step 3: Semantic Cache Lookup in ChromaDB (handles repeated/similar questions without LLM)
+        # Step 3: Fast L1 cache check before computing any embeddings (<0.1ms)
         cache_res = self.vector_store.lookup_cache(raw_question)
+        if cache_res.get("hit") and cache_res.get("distance", 1.0) == 0.0:
+            return {
+                "answer": cache_res["answer"],
+                "source": "semantic_cache",
+                "groq_called": False,
+                "cached": True,
+                "category": cache_res.get("category", "general"),
+                "confidence": 1.0,
+            }
+
+        # Step 3b: Compute query embedding ONCE and share across Semantic Cache & RAG
+        query_emb = self.vector_store.embed_query(raw_question)
+
+        cache_res = self.vector_store.lookup_cache(raw_question, query_embedding=query_emb)
         if cache_res.get("hit"):
             return {
                 "answer": cache_res["answer"],
@@ -62,8 +76,8 @@ class ChatbotOrchestrator:
                 "confidence": round(1.0 - cache_res.get("distance", 0.0), 4),
             }
 
-        # Step 4: RAG Retrieval & Domain Gate via ChromaDB Vector Store
-        rag_res = self.vector_store.retrieve(raw_question, top_k=3)
+        # Step 4: RAG Retrieval & Domain Gate via ChromaDB Vector Store (reuses query_emb)
+        rag_res = self.vector_store.retrieve(raw_question, top_k=3, query_embedding=query_emb)
         if not rag_res["relevant"]:
             return {
                 "answer": OUT_OF_DOMAIN_RESPONSE,

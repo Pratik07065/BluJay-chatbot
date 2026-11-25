@@ -16,8 +16,8 @@ if not logger.handlers:
 
 # Configurable environment variables
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
-GROQ_MAX_TOKENS = int(os.getenv("GROQ_MAX_TOKENS", "500"))
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+GROQ_MAX_TOKENS = int(os.getenv("GROQ_MAX_TOKENS", "350"))
 GROQ_TEMPERATURE = float(os.getenv("GROQ_TEMPERATURE", "0.0"))
 
 FALLBACK_RESPONSE = (
@@ -49,7 +49,7 @@ class GroqClient:
     """
     def __init__(self, api_key: Optional[str] = None, model: Optional[str] = None):
         self.api_key = api_key or os.getenv("GROQ_API_KEY", "")
-        self.model = model or os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
+        self.model = model or os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
         self._client: Optional[Groq] = None
 
     def _get_client(self) -> Optional[Groq]:
@@ -76,9 +76,9 @@ class GroqClient:
         if not question or not question.strip():
             return FALLBACK_RESPONSE
 
-        # Format context cleanly
+        # Format context compactly to minimize prompt tokens and TTFT latency
         if isinstance(context, (dict, list)):
-            formatted_context = json.dumps(context, indent=2, ensure_ascii=False)
+            formatted_context = json.dumps(context, separators=(",", ":"), ensure_ascii=False)
         else:
             formatted_context = str(context).strip()
 
@@ -129,6 +129,9 @@ class GroqClient:
 # Aliases for backward compatibility
 GroqService = GroqClient
 
+_default_groq_client: Optional[GroqClient] = None
+
+
 def generate_blujay_answer(
     question: str,
     context: Union[str, Dict[str, Any], List[Any]],
@@ -137,7 +140,12 @@ def generate_blujay_answer(
 ) -> str:
     """
     Module-level function to generate a Blujay answer via Groq API.
+    Reuses a singleton GroqClient to keep HTTP/TLS connections warm.
     """
-    client = GroqClient(api_key=api_key, model=model)
-    return client.generate_answer(question, context)
+    global _default_groq_client
+    if api_key is not None or model is not None:
+        return GroqClient(api_key=api_key, model=model).generate_answer(question, context)
+    if _default_groq_client is None:
+        _default_groq_client = GroqClient()
+    return _default_groq_client.generate_answer(question, context)
 

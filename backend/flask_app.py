@@ -18,6 +18,9 @@ from flask_limiter.util import get_remote_address
 from chatbot import process_question
 from app.core.chatbot import get_orchestrator
 
+# Pre-warm ChromaDB & ONNX embedding model at server startup
+get_orchestrator()
+
 # Configure Logging
 logging.basicConfig(
     level=logging.INFO,

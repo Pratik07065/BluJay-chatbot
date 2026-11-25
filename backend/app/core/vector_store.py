@@ -1,6 +1,8 @@
 import os
+import re
 import json
 import logging
+from functools import lru_cache
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Union
 
@@ -21,12 +23,22 @@ if not logger.handlers:
 CHROMA_DB_DIR = DATA_DIR / "chroma_db"
 COLLECTION_NAME = "blujay_knowledge"
 CACHE_COLLECTION_NAME = "blujay_semantic_cache"
+L1_CACHE_MAX_SIZE = 512
+
+
+def _normalize_cache_key(text: str) -> str:
+    """Normalizes text for ultra-fast L1 exact/punctuation-insensitive cache lookup."""
+    cleaned = re.sub(r"[^\w\s]", "", text.lower()).strip()
+    return re.sub(r"\s+", " ", cleaned)
 
 
 class VectorStore:
     """
-    ChromaDB-backed Vector Store for Blujay Technologies RAG pipeline.
-    Indexes knowledge base entries and retrieves semantically relevant context.
+    ChromaDB-backed Vector Store for Blujay Technologies RAG & Semantic Cache pipeline.
+    Optimized with:
+      1. L1 in-memory normalized cache (<0.1ms for repeated queries).
+      2. Single-pass query embedding shared across semantic cache & RAG retrieval.
+      3. Startup model warm-up to eliminate cold-start embedding latency.
     """
 
     def __init__(
@@ -51,15 +63,57 @@ class VectorStore:
             metadata={"hnsw:space": "cosine"},
         )
 
+        # L1 in-memory cache mapping normalized question -> {answer, category}
+        self._l1_cache: Dict[str, Dict[str, str]] = {}
+
+        # LRU-cached embedding function so identical strings are never embedded twice
+        self._embed_cached = lru_cache(maxsize=L1_CACHE_MAX_SIZE)(self._compute_embedding)
+
+        # Pre-warm ONNX embedding model & load L1 cache from existing Chroma semantic cache
+        self._warmup()
+
+    def _compute_embedding(self, text: str) -> tuple:
+        vec = self._embedding_fn([text])[0]
+        return tuple(float(x) for x in vec)
+
+    def embed_query(self, text: str) -> List[float]:
+        """Computes (or retrieves cached) embedding vector for a query string."""
+        return list(self._embed_cached(text.strip()))
+
+    def _warmup(self) -> None:
+        """Pre-loads ONNX session and populates L1 cache from persisted semantic cache."""
+        try:
+            self._embed_cached("warmup")
+            if self._cache_collection.count() > 0:
+                existing = self._cache_collection.get(include=["documents", "metadatas"])
+                for doc, meta in zip(existing.get("documents", []), existing.get("metadatas", [])):
+                    if doc and meta and meta.get("answer"):
+                        key = _normalize_cache_key(doc)
+                        if key:
+                            self._l1_cache[key] = {
+                                "answer": meta["answer"],
+                                "category": meta.get("category", "general"),
+                            }
+        except Exception as e:
+            logger.warning(f"VectorStore warmup warning: {e}")
+
+    def _put_l1(self, question: str, answer: str, category: str) -> None:
+        key = _normalize_cache_key(question)
+        if not key:
+            return
+        if len(self._l1_cache) >= L1_CACHE_MAX_SIZE:
+            # Evict oldest entry (Python 3.7+ dict preserves insertion order)
+            self._l1_cache.pop(next(iter(self._l1_cache)))
+        self._l1_cache[key] = {"answer": answer, "category": category}
+
     def index_knowledge_base(
         self,
         kb_file_path: Optional[Union[str, Path]] = None,
         force_reindex: bool = False,
     ) -> int:
         """
-        Indexes all knowledge base entries into ChromaDB.
+        Indexes all knowledge base entries into ChromaDB and seeds the semantic cache.
         Skips indexing if the collection already has documents unless force_reindex=True.
-        Returns the number of indexed documents.
         """
         if not force_reindex and self._collection.count() > 0:
             return self._collection.count()
@@ -86,7 +140,6 @@ class VectorStore:
             kw_text = ", ".join(keywords) if keywords else ""
             doc_text = f"Category: {category}\nQuestions: {q_text}\nKeywords: {kw_text}\nAnswer: {answer}"
 
-            doc_id = f"kb_{idx}"
             documents.append(doc_text)
             metadatas.append({
                 "category": str(category),
@@ -94,9 +147,8 @@ class VectorStore:
                 "primary_question": str(questions[0]) if questions else "",
                 "source": "knowledge_base",
             })
-            ids.append(doc_id)
+            ids.append(f"kb_{idx}")
 
-        # Also index blujay_context.json if it exists
         if BLUJAY_CONTEXT_PATH.exists():
             try:
                 with open(BLUJAY_CONTEXT_PATH, "r", encoding="utf-8") as f:
@@ -131,7 +183,6 @@ class VectorStore:
         )
         logger.info(f"Indexed {len(documents)} documents into ChromaDB collection '{self.collection_name}'.")
 
-        # Seed semantic cache with known FAQ questions from the knowledge base
         cache_docs: List[str] = []
         cache_metas: List[Dict[str, Any]] = []
         cache_ids: List[str] = []
@@ -142,13 +193,15 @@ class VectorStore:
                 continue
             for q_idx, q in enumerate(entry.get("questions", [])):
                 if q and q.strip():
-                    cache_docs.append(q.strip())
+                    q_clean = q.strip()
+                    cache_docs.append(q_clean)
                     cache_metas.append({
                         "answer": str(answer),
                         "category": str(category),
                         "source": "knowledge_base",
                     })
                     cache_ids.append(f"kb_q_{idx}_{q_idx}")
+                    self._put_l1(q_clean, str(answer), str(category))
 
         if cache_docs:
             self._cache_collection.upsert(
@@ -160,23 +213,71 @@ class VectorStore:
 
         return len(documents)
 
+    def lookup_cache(
+        self,
+        query: str,
+        max_distance: float = CACHE_MAX_DISTANCE,
+        query_embedding: Optional[List[float]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Checks L1 normalized cache first (<0.1ms), then ChromaDB semantic cache.
+        """
+        if not query or not query.strip():
+            return {"hit": False}
+
+        # L1 instant lookup (zero embedding overhead)
+        l1_key = _normalize_cache_key(query)
+        if l1_key in self._l1_cache:
+            entry = self._l1_cache[l1_key]
+            return {
+                "hit": True,
+                "answer": entry["answer"],
+                "category": entry["category"],
+                "distance": 0.0,
+            }
+
+        if self._cache_collection.count() == 0:
+            return {"hit": False}
+
+        emb = query_embedding if query_embedding is not None else self.embed_query(query)
+        results = self._cache_collection.query(
+            query_embeddings=[emb],
+            n_results=1,
+            include=["metadatas", "distances"],
+        )
+
+        metas = results.get("metadatas", [[]])[0]
+        dists = results.get("distances", [[]])[0]
+
+        if not metas or not dists:
+            return {"hit": False}
+
+        dist = float(dists[0])
+        if dist <= max_distance:
+            meta = metas[0]
+            answer = meta.get("answer", "")
+            category = meta.get("category", "general")
+            # Promote this phrasing into L1 cache so next repeat is <0.1ms
+            self._put_l1(query, answer, category)
+            return {
+                "hit": True,
+                "answer": answer,
+                "category": category,
+                "distance": round(dist, 4),
+            }
+
+        return {"hit": False}
+
     def retrieve(
         self,
         query: str,
         top_k: int = 3,
         max_distance: float = RAG_MAX_DISTANCE,
+        query_embedding: Optional[List[float]] = None,
     ) -> Dict[str, Any]:
         """
-        Queries ChromaDB for the top_k most relevant documents.
+        Queries ChromaDB for the top_k most relevant documents using a pre-computed embedding.
         Filters out results whose cosine distance exceeds max_distance.
-
-        Returns:
-            {
-                "relevant": bool,
-                "contexts": List[Dict[str, Any]],
-                "best_distance": float,
-                "category": str
-            }
         """
         if not query or not query.strip():
             return {"relevant": False, "contexts": [], "best_distance": 1.0, "category": "out_of_domain"}
@@ -187,9 +288,10 @@ class VectorStore:
         if self._collection.count() == 0:
             return {"relevant": False, "contexts": [], "best_distance": 1.0, "category": "out_of_domain"}
 
+        emb = query_embedding if query_embedding is not None else self.embed_query(query)
         n_results = min(top_k, self._collection.count())
         results = self._collection.query(
-            query_texts=[query.strip()],
+            query_embeddings=[emb],
             n_results=n_results,
             include=["documents", "metadatas", "distances"],
         )
@@ -225,42 +327,6 @@ class VectorStore:
             "category": filtered_contexts[0]["category"],
         }
 
-    def lookup_cache(
-        self,
-        query: str,
-        max_distance: float = CACHE_MAX_DISTANCE,
-    ) -> Dict[str, Any]:
-        """
-        Checks the ChromaDB semantic cache for a semantically similar question.
-        If found within max_distance, returns the cached answer without calling the LLM.
-        """
-        if not query or not query.strip() or self._cache_collection.count() == 0:
-            return {"hit": False}
-
-        results = self._cache_collection.query(
-            query_texts=[query.strip()],
-            n_results=1,
-            include=["metadatas", "distances"],
-        )
-
-        metas = results.get("metadatas", [[]])[0]
-        dists = results.get("distances", [[]])[0]
-
-        if not metas or not dists:
-            return {"hit": False}
-
-        dist = float(dists[0])
-        if dist <= max_distance:
-            meta = metas[0]
-            return {
-                "hit": True,
-                "answer": meta.get("answer", ""),
-                "category": meta.get("category", "general"),
-                "distance": round(dist, 4),
-            }
-
-        return {"hit": False}
-
     def add_to_cache(
         self,
         question: str,
@@ -268,15 +334,17 @@ class VectorStore:
         category: str = "general",
     ) -> None:
         """
-        Stores a newly generated (question, answer) pair in the ChromaDB semantic cache
-        so future semantically similar queries are served without calling the LLM.
+        Stores a newly generated (question, answer) pair in both L1 cache and ChromaDB semantic cache.
         """
         if not question or not question.strip() or not answer or not answer.strip():
             return
 
-        doc_id = f"llm_{abs(hash(question.strip().lower()))}"
+        q_clean = question.strip()
+        self._put_l1(q_clean, str(answer), str(category))
+
+        doc_id = f"llm_{abs(hash(q_clean.lower()))}"
         self._cache_collection.upsert(
-            documents=[question.strip()],
+            documents=[q_clean],
             metadatas=[{
                 "answer": str(answer),
                 "category": str(category),
@@ -290,10 +358,12 @@ class VectorStore:
         return {
             "kb_documents": self._collection.count(),
             "semantic_cache_entries": self._cache_collection.count(),
+            "l1_cache_entries": len(self._l1_cache),
         }
 
     def clear_cache(self, reseed: bool = True) -> int:
-        """Clears the semantic cache collection and optionally re-seeds FAQ questions."""
+        """Clears the semantic cache collection and L1 cache, optionally re-seeding FAQ questions."""
+        self._l1_cache.clear()
         existing_ids = self._cache_collection.get()["ids"]
         if existing_ids:
             self._cache_collection.delete(ids=existing_ids)
