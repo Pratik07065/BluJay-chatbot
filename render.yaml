@@ -4,11 +4,14 @@ services:
     env: python
     region: singapore
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn -w 2 -b 0.0.0.0:$PORT server:app
+    buildCommand: pip install -r requirements.txt && python -c "import sys; sys.path.insert(0, 'backend'); from app.core.chatbot import get_orchestrator; get_orchestrator()"
+    startCommand: gunicorn -w 1 --threads 4 --timeout 120 -b 0.0.0.0:$PORT server:app
     envVars:
       - key: GROQ_MODEL
         value: llama-3.1-8b-instant
-
+      - key: RAG_MAX_DISTANCE
+        value: "0.68"
+      - key: CACHE_MAX_DISTANCE
+        value: "0.38"
       - key: GROQ_API_KEY
         sync: false
