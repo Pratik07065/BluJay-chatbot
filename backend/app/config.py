@@ -15,8 +15,9 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 KB_JSON_PATH = DATA_DIR / "knowledge.json"
 BLUJAY_CONTEXT_PATH = DATA_DIR / "blujay_context.json"
 
-# Matching thresholds
-SIMILARITY_THRESHOLD = float(os.getenv("SIMILARITY_THRESHOLD", "0.82"))
+# ChromaDB RAG & Semantic Cache thresholds (cosine distance: 0.0 = exact, 1.0 = orthogonal)
+RAG_MAX_DISTANCE = float(os.getenv("RAG_MAX_DISTANCE", "0.68"))
+CACHE_MAX_DISTANCE = float(os.getenv("CACHE_MAX_DISTANCE", "0.38"))
 
 # Polite rejection response for out-of-domain queries
 OUT_OF_DOMAIN_RESPONSE = (

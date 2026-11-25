@@ -6,8 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
 from app.models.schemas import ChatRequest, ChatResponse
-from app.core.kb_manager import KnowledgeBaseManager
-from app.core.chatbot import process_question
+from app.core.chatbot import process_question, get_orchestrator
 from app.config import OUT_OF_DOMAIN_RESPONSE, FALLBACK_RESPONSE
 
 app = FastAPI(
@@ -25,24 +24,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize core services
-kb_manager = KnowledgeBaseManager()
-
 @app.get("/health")
 def health_check():
+    stats = get_orchestrator().vector_store.get_stats()
     return {
         "status": "healthy",
         "service": "Blujay AI Chatbot",
-        "kb_pairs_count": len(kb_manager.kb_data.qa_pairs)
+        **stats
     }
 
-@app.get("/api/kb")
-def get_knowledge_base_stats():
+@app.get("/api/cache/stats")
+def get_cache_stats():
+    stats = get_orchestrator().vector_store.get_stats()
     return {
-        "version": kb_manager.kb_data.version,
-        "last_updated": kb_manager.kb_data.last_updated,
-        "total_qa_pairs": len(kb_manager.kb_data.qa_pairs),
-        "categories": list(set(p.category for p in kb_manager.kb_data.qa_pairs))
+        "status": "ok",
+        **stats
     }
 
 @app.post("/api/chat", response_model=ChatResponse)

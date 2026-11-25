@@ -16,6 +16,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 from chatbot import process_question
+from app.core.chatbot import get_orchestrator
 
 # Configure Logging
 logging.basicConfig(
@@ -133,94 +134,27 @@ def chat_endpoint():
         logger.exception(f"Error processing question: {e}")
         return jsonify({"error": "Internal Server Error", "message": "Failed to process chat question."}), 500
 
-from functools import wraps
-from app.core.knowledge_manager import pending_kb_manager, ADMIN_API_KEY
+# -------------------------- Semantic Cache Stats & Management --------------------------
+
+@app.route("/api/cache/stats", methods=["GET"])
+def cache_stats():
+    """
+    Returns ChromaDB knowledge base and semantic cache entry counts.
+    """
+    stats = get_orchestrator().vector_store.get_stats()
+    return jsonify({"status": "ok", **stats}), 200
 
 
-def require_admin_auth(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        api_key = request.headers.get("X-Admin-API-Key")
-        auth_header = request.headers.get("Authorization")
-        
-        token = None
-        if auth_header and auth_header.startswith("Bearer "):
-            token = auth_header.split(" ", 1)[1]
-            
-        if (api_key and api_key == ADMIN_API_KEY) or (token and token == ADMIN_API_KEY):
-            return f(*args, **kwargs)
-            
-        return jsonify({"error": "Unauthorized", "message": "Admin API key or Bearer token is missing or invalid."}), 401
-    return decorated
+@app.route("/api/cache/reindex", methods=["POST"])
+def cache_reindex():
+    """
+    Re-indexes the knowledge base and re-seeds the ChromaDB semantic cache.
+    """
+    orchestrator = get_orchestrator()
+    count = orchestrator.vector_store.index_knowledge_base(force_reindex=True)
+    stats = orchestrator.vector_store.get_stats()
+    return jsonify({"status": "ok", "indexed_documents": count, **stats}), 200
 
-# -------------------------- Admin Knowledge Workflow API --------------------------
-
-@app.route("/api/admin/pending", methods=["GET"])
-@require_admin_auth
-def admin_list_pending():
-    status_filter = request.args.get("status", "pending")
-    entries = pending_kb_manager.list_pending(status=status_filter if status_filter != "all" else None)
-    return jsonify({
-        "status": "ok",
-        "count": len(entries),
-        "pending_entries": entries
-    }), 200
-
-@app.route("/api/admin/approve/<entry_id>", methods=["POST"])
-@require_admin_auth
-def admin_approve_entry(entry_id):
-    promoted = pending_kb_manager.approve_and_promote(entry_id)
-    if not promoted:
-        return jsonify({"error": "Not Found", "message": f"Pending entry '{entry_id}' not found."}), 404
-    return jsonify({
-        "status": "ok",
-        "message": f"Entry '{entry_id}' approved and promoted to verified knowledge base.",
-        "entry": promoted
-    }), 200
-
-@app.route("/api/admin/reject/<entry_id>", methods=["POST"])
-@require_admin_auth
-def admin_reject_entry(entry_id):
-    rejected = pending_kb_manager.reject_pending(entry_id)
-    if not rejected:
-        return jsonify({"error": "Not Found", "message": f"Pending entry '{entry_id}' not found."}), 404
-    return jsonify({
-        "status": "ok",
-        "message": f"Entry '{entry_id}' rejected successfully.",
-        "entry_id": entry_id
-    }), 200
-
-@app.route("/api/admin/edit/<entry_id>", methods=["PUT"])
-@require_admin_auth
-def admin_edit_entry(entry_id):
-    if not request.is_json:
-        return jsonify({"error": "Invalid Request", "message": "Content-Type must be application/json."}), 400
-
-    data = request.get_json(silent=True) or {}
-    new_answer = data.get("answer")
-    new_category = data.get("category")
-
-    updated = pending_kb_manager.edit_pending(entry_id, new_answer=new_answer, new_category=new_category)
-    if not updated:
-        return jsonify({"error": "Not Found", "message": f"Pending entry '{entry_id}' not found."}), 404
-
-    return jsonify({
-        "status": "ok",
-        "message": f"Entry '{entry_id}' updated successfully.",
-        "entry": updated
-    }), 200
-
-@app.route("/api/admin/promote/<entry_id>", methods=["POST"])
-@require_admin_auth
-def admin_promote_entry(entry_id):
-    promoted = pending_kb_manager.approve_and_promote(entry_id)
-    if not promoted:
-        return jsonify({"error": "Not Found", "message": f"Pending entry '{entry_id}' not found."}), 404
-    return jsonify({
-        "status": "ok",
-        "message": f"Entry '{entry_id}' promoted to verified knowledge base.",
-        "entry": promoted
-    }), 200
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "5000"))

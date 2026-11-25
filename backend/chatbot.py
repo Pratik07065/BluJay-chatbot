@@ -8,5 +8,6 @@ if str(backend_dir) not in sys.path:
 
 from app.core.chatbot import (
     process_question,
+    get_orchestrator,
     ChatbotOrchestrator
 )
